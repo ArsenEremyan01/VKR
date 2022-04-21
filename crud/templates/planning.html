@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+{% block title %} Home {% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron bg-dark text-white">
+                <h2>Планирование <b>мероприятий</b>
+                    <button type="button" class="btn btn-success float-right"
+                            data-toggle="modal" data-target="#mymodal">Добавить мероприятие
+                    </button>
+                </h2>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                    {{message}}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <table class="table table-hover table-dark">
+                    <tr>
+                        <th>№</th>
+                        <th>Подразделение</th>
+                        <th>Цель проведения мероприятия</th>
+                        <th>Рабочее место</th>
+                        <th>Дата</th>
+                    </tr>
+                    {% for row in employees %}
+                    <tr>
+                        <td>{{row.id}}</td>
+                        <td>{{row.podrz_plan}}</td>
+                        <td>{{row.goal}}</td>
+                        <td>{{row.work_plan}}</td>
+                        <td>{{row.date_plan}}</td>
+                        <td>
+                            <a href="/updatePl/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal"
+                               data-target="#modaledit{{row.id}}">Изменить</a>
+                            <a href="/deletePl/{{row.id}}" class="btn btn-danger btn-xs"
+                               onclick="return confirm('Вы уверены, что хотите удалить ?')">Удалить</a>
+                        </td>
+                    </tr>
+                    <!-- Modal Edit Employee-->
+                    <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Редактировать</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{url_for('update_planning')}}" method="POST">
+                                        <div class="form-group">
+                                            <label>Подразделение:</label>
+                                            <input type="text" class="form-control" name="podrz_plan" value="{{row.podrz_plan}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Цель проведения мероприятия:</label>
+                                            <input type="text" class="form-control" name="goal" value="{{row.goal}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Рабочее место:</label>
+                                            <input type="text" class="form-control" name="work_plan" value="{{row.work_plan}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Дата проведения:</label>
+                                            <input type="text" class="form-control" name="date_plan" value="{{row.date_plan}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" type="submit">Обновить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </table>
+            </div>
+            <!-- Modal Add Employee-->
+            <div id="mymodal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Добавить мероприятие</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{url_for('insert_planning')}}" method="POST">
+                                <div class="form-group">
+                                    <label>Подразделение:</label>
+                                    <input type="text" class="form-control" name="podrz_plan">
+                                </div>
+                                <div class="form-group">
+                                    <label>Цель проведения мероприятия::</label>
+                                    <input type="text" class="form-control" name="goal">
+                                </div>
+                                <div class="form-group">
+                                    <label>Рабочее место:</label>
+                                    <input type="text" class="form-control" name="work_plan">
+                                </div>
+                                <div class="form-group">
+                                    <label>Дата:</label>
+                                    <input type="text" class="form-control" name="date_plan">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">Добавить на учёт</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

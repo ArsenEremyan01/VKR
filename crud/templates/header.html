@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block title %} VKR Project {% endblock %}
+
+
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="static/css/style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="header">
+    <a href="{{ url_for('index') }}" class="logo"><img src="static/img/header.png" width="80" height="35"></a>
+    <div class="header-right">
+        <a href="{{ url_for('accounting') }}">Учёт</a>
+        <a href="{{ url_for('planning') }}">Планирование</a>
+        <a href="{{ url_for('info') }}">Информация</a>
+    </div>
+</div>
+</body>
+</html>
+
+{% endblock %}
+
