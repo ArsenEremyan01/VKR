@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% include 'main.html' %}
+{% block title %} Home {% endblock %}
+{% block body %}
+
+
+<div class="container">
+    <div class="form-row text-center">
+        <div class="col md-12">
+            <a href="{{ url_for('induction_training') }}" class="btn btn-secondary btn-lg active"
+               role="button" aria-pressed="true" >Вводный инструктаж</a>
+            <a href="{{ url_for('other_training') }}" class="btn btn-secondary btn-lg active"
+               role="button" aria-pressed="true">Остальные инструктажи</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

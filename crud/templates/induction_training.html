@@ -7,9 +7,9 @@
     <div class="row">
         <div class="col md-12">
             <div class="jumbotron bg-dark text-white">
-                <h2>Планирование инструктажей
+                <h2>Журнал вводного инструктажа
                     <button type="button" class="btn btn-success float-right"
-                            data-toggle="modal" data-target="#mymodal">Добавить мероприятие
+                            data-toggle="modal" data-target="#mymodal">Добавить на учёт
                     </button>
                 </h2>
                 {% with messages = get_flashed_messages() %}
@@ -26,23 +26,25 @@
                 {% endwith %}
                 <table class="table table-hover table-dark">
                     <tr>
+                        <th>Дата</th>
                         <th>ФИО работника</th>
+                        <th>Год рождения</th>
                         <th>Должность</th>
-                        <th>Вид инструктажа</th>
+                        <th>Подразделение</th>
                         <th>ФИО инструктирующего</th>
-                        <th>Дата прохождения</th>
                     </tr>
                     {% for row in employees %}
                     <tr>
-                        <td>{{row.employee_name}}</td>
-                        <td>{{row.position}}</td>
-                        <td>{{row.type_of_briefing}}</td>
-                        <td>{{row.instructor_name}}</td>
                         <td>{{row.briefing_date}}</td>
+                        <td>{{row.employee_name}}</td>
+                        <td>{{row.birthdate}}</td>
+                        <td>{{row.position}}</td>
+                        <td>{{row.subdivision}}</td>
+                        <td>{{row.instructor_name}}</td>
                         <td>
-                            <a href="/updatePl/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal"
+                            <a href="/updateAcc/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal"
                                data-target="#modaledit{{row.id}}">Изменить</a>
-                            <a href="/deletePl/{{row.id}}" class="btn btn-danger btn-xs"
+                            <a href="/deleteAcc/{{row.id}}" class="btn btn-danger btn-xs"
                                onclick="return confirm('Вы уверены, что хотите удалить ?')">Удалить</a>
                         </td>
                     </tr>
@@ -51,29 +53,34 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <form action="{{ url_for('update_planning') }}" method="POST">
+                                    <form action="{{ url_for('update_accounting') }}" method="POST">
                                         <div class="form-group">
                                             <input type="hidden" name="id" value="{{row.id}}">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Формат ввода 12-07-2022"
+                                                   name="briefing_date" value="{{row.briefing_date}}" required="1">
+                                        </div>
+                                        <div class="form-group">
                                             <input type="text" class="form-control" placeholder="ФИО инструктируемого"
                                                    name="employee_name" value="{{row.employee_name}}" required="1">
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Должность"
-                                                   name="position" value="{{row.position}}" required="1">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Формат ввода 12-07-2022" name="birthdate"
+                                                   value="{{row.birthdate}}" required="1">
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Вид инструктажа"
-                                                   name="type_of_briefing" value="{{row.type_of_briefing}}"
-                                                   required="1">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Должность инструктируемого" name="position"
+                                                   value="{{row.position}}" required="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Подразделение"
+                                                   name="subdivision" value="{{row.subdivision}}" required="1">
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control" placeholder="ФИО инструктирующего"
                                                    name="instructor_name" value="{{row.instructor_name}}" required="1">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control"
-                                                   placeholder="Формат ввода 12-07-2022"
-                                                   name="briefing_date" value="{{row.briefing_date}}" required="1">
                                         </div>
                                         <div class="form-group">
                                             <button class="btn btn-primary" type="submit">Обновить</button>
@@ -95,38 +102,42 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Добавить мероприятие</h4>
+                            <h4 class="modal-title">Добавить</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="{{url_for('insert_planning')}}" method="POST">
+                            <form action="{{ url_for('insert_accounting') }}" method="POST">
                                 <div class="form-group">
-                                    <label>ФИО инструктируемого:</label>
-                                    <input type="text" class="form-control" placeholder="ФИО инструктируемого"
-                                           name="employee_name" required="1">
-                                </div>
-                                <div class="form-group">
-                                    <label>Должность:</label>
-                                    <input type="text" class="form-control" placeholder="Должность"
-                                           name="position" required="1">
-                                </div>
-                                <div class="form-group">
-                                    <label>Вид инструктажа:</label>
-                                    <input type="text" class="form-control" placeholder="Вид инструктажа"
-                                           name="type_of_briefing" required="1">
-                                </div>
-                                <div class="form-group">
-                                    <label>ФИО инструктирующего:</label>
-                                    <input type="text" class="form-control" placeholder="ФИО инструктирующего"
-                                           name="instructor_name" required="1">
-                                </div>
-                                <div class="form-group">
-                                    <label>Дата проведения инструктажа</label>
-                                    <input type="text" class="form-control"
-                                           placeholder="Формат ввода 12-07-2022"
+                                    <label>Дата прохождения:</label>
+                                    <input type="text" placeholder="Формат ввода 12-07-2022" class="form-control"
                                            name="briefing_date" required="1">
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-primary" type="submit">Добавить на учёт</button>
+                                    <label>ФИО работника:</label>
+                                    <input type="text" placeholder="ФИО работника" class="form-control"
+                                           name="employee_name" required="1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Дата рождения:</label>
+                                    <input type="text" placeholder="Формат ввода 12-07-2022" name="birthdate"
+                                           class="form-control" required="1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Должность:</label>
+                                    <input type="text" placeholder="Должность инструктируемого" name="position"
+                                           class="form-control" required="1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Подразделение:</label>
+                                    <input type="text" placeholder="Подразделение" class="form-control" name="subdivision"
+                                           required="1">
+                                </div>
+                                <div class="form-group">
+                                    <label>ФИО инструктирующего:</label>
+                                    <input type="text" placeholder="ФИО инструктирующего" class="form-control"
+                                           name="instructor_name" required="1">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">Добавить</button>
                                 </div>
                             </form>
                         </div>
