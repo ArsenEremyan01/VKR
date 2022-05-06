@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% include 'main.html' %}
 {% include 'scrollUp.html' %}
-{% block title %} Home {% endblock %}
+{% block title %} КПДУП {% endblock %}
 {% block body %}
 <div class="container">
     <div class="row">
@@ -50,12 +50,12 @@
                                onclick="return confirm('Вы уверены, что хотите удалить?')">Удалить</a>
                         </td>
                     </tr>
-                    <!-- Modal Edit Employee-->
                     <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <form action="{{ url_for('update_accounting_oth') }}" method="POST">
+                                    <form action="{{ url_for('views.update_accounting_oth') }}" method="POST">
+                                        {{ form.csrf_token }}
                                         <div class="form-group">
                                             <input type="hidden" name="id" value="{{row.id}}">
                                             <input type="text" class="form-control"
@@ -77,8 +77,10 @@
                                                    value="{{row.position}}" required="1">
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Первичный, Повторный, Внеплановый, Целевой"
-                                                   name="type_of_briefing" value="{{row.type_of_briefing}}" required="1">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Первичный, Повторный, Внеплановый, Целевой"
+                                                   name="type_of_briefing" value="{{row.type_of_briefing}}"
+                                                   required="1">
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control" placeholder="ФИО инструктирующего"
@@ -103,7 +105,6 @@
                     {% endfor %}
                 </table>
             </div>
-            <!-- Modal Add Employee-->
             <div id="mymodal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -111,7 +112,8 @@
                             <h4 class="modal-title">Добавить на учёт</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ url_for('insert_accounting_oth') }}" method="POST">
+                            <form action="{{ url_for('views.insert_accounting_oth') }}" method="POST">
+                                {{ form.csrf_token }}
                                 <div class="form-group">
                                     <label>Дата прохождения:</label>
                                     <input type="text" placeholder="Формат ввода 12-07-2022" class="form-control"

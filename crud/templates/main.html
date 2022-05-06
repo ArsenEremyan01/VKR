@@ -1,12 +1,7 @@
 {% extends 'base.html' %}
-
-
-{% block title %} VKR Project {% endblock %}
-
-
+{% block title %} КПДУП{% endblock %}
 {% block body %}
-
-<!DOCTYPE html>
+{{ '<' }}{{ '!DOCTYPE html>' }}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,12 +9,13 @@
 </head>
 <body>
 <div class="header">
-    <a href="{{ url_for('open_main_page') }}" class="logo"><img src="static/img/header.png" width="80" height="35"></a>
+    <a href="{{ url_for('views.open_main_page') }}" class="logo"><img src="static/img/header.png" width="80"
+                                                                      height="35"></a>
     <div class="header-right">
-        <a href="{{ url_for('accounting') }}">Учёт</a>
-        <a href="{{ url_for('planning') }}">Планирование</a>
-        <a href="{{ url_for('info') }}">Информация</a>
-        <a href="{{ url_for('logout') }}">Выйти</a>
+        <a href="{{ url_for('views.accounting') }}">Учёт</a>
+        <a href="{{ url_for('views.planning') }}">Планирование</a>
+        <a href="{{ url_for('views.info') }}">Помощь</a>
+        <a href="{{ url_for('auth.logout') }}">Выйти</a>
     </div>
 </div>
 </body>

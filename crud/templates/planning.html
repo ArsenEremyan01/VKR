@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% include 'main.html' %}
 {% include 'scrollUp.html' %}
-{% block title %} Home {% endblock %}
+{% block title %} КПДУП {% endblock %}
 {% block body %}
 <div class="container">
     <div class="row">
@@ -46,12 +46,12 @@
                                onclick="return confirm('Вы уверены, что хотите удалить ?')">Удалить</a>
                         </td>
                     </tr>
-                    <!-- Modal Edit Employee-->
                     <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <form action="{{ url_for('update_planning') }}" method="POST">
+                                    <form action="{{ url_for('views.update_planning') }}" method="POST">
+                                        {{ form.csrf_token }}
                                         <div class="form-group">
                                             <input type="hidden" name="id" value="{{row.id}}">
                                             <input type="text" class="form-control" placeholder="ФИО инструктируемого"
@@ -90,7 +90,6 @@
                     {% endfor %}
                 </table>
             </div>
-            <!-- Modal Add Employee-->
             <div id="mymodal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -98,7 +97,7 @@
                             <h4 class="modal-title">Добавить мероприятие</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="{{url_for('insert_planning')}}" method="POST">
+                            <form action="{{url_for('views.insert_planning')}}" method="POST">
                                 <div class="form-group">
                                     <label>ФИО инструктируемого:</label>
                                     <input type="text" class="form-control" placeholder="ФИО инструктируемого"

@@ -1,12 +1,13 @@
-<!DOCTYPE html>
+{{ '<' }}{{ '!DOCTYPE html>' }}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Form</title>
+    <title>КПДУП</title>
     <link rel="stylesheet" href="static/css/login.css">
 </head>
 <body>
 <form method="POST">
+    {{ form.csrf_token }}
     <div class="form">
         <h1>Вход</h1>
         <div class="input-form">
@@ -27,7 +28,7 @@
         <div class="input-form">
             <input type="submit" value="Войти">
         </div>
-        <a href="{{ url_for('register') }}">Зарегистрироваться</a>
+        <a href="{{ url_for('auth.register') }}">Зарегистрироваться</a>
         <a href="#" class="forget">Забыли пароль?</a>
     </div>
 </form>
