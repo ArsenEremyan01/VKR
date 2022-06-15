@@ -8,7 +8,7 @@ app = Flask(__name__)
 csrf = CSRFProtect(app)
 app.app_context().push()
 app.secret_key = "inSpo_Eremyan2001-KubGu090601"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:W5w5y599@localhost/vkr'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:arsen@localhost/vkr'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 db.create_all()
